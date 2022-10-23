@@ -1,9 +1,8 @@
-package com.example.springbootresttosql;
+package com.example.springbootresttosql.webservice;
 
 /**
  * Exception class for our controllers (see exception handing chapter in Effective Java - this is an examnple of
  * coding to an abstraction.)
- *
  * */
 public class ProcessingException extends Exception {
 

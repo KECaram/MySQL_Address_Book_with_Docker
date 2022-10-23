@@ -1,0 +1,35 @@
+{
+	"entry1": {
+		"last_name": "Halpert",
+		"first_name": "Jim",
+		"street_address": "12 Monk Circle",
+		"additional_address": "",
+		"city_or_town": "Scranton",
+		"state": "PA",
+		"zipcode": "02138",
+		"telephone": "1112223333",
+		"email": "jhaplert@dundermifflen.com"
+	},
+	"entry2": {
+		"last_name": "Scott",
+		"first_name": "Michael",
+		"street_address": "33 Dwight St.",
+		"additional_address": "Apt 2",
+		"city_or_town": "Scranton",
+		"state": "PA",
+		"zipcode": "02138",
+		"telephone": "5552008123",
+		"email": "mscott@dundermifflen.com"
+	},
+	"entry3": {
+		"last_name": "Schrute",
+		"first_name": "Dwight",
+		"street_address": "1 Shrute Farms",
+		"additional_address": "Biggest House You can See",
+		"city_or_town": "Scranton",
+		"state": "PA",
+		"zipcode": "02138",
+		"telephone": "0000000001",
+		"email": "dschrute@dundermifflen.com"
+	}
+}

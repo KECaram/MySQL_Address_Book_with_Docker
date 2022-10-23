@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Addresses>
+    <record>
+        <last_name>Marks</last_name>
+        <first_name>Spencer</first_name>
+        <street_address>699 Cambridge Street</street_address>
+        <additional_address>BOX 123</additional_address>
+        <city_or_town>Cambridge</city_or_town>
+        <state>MA</state>
+        <zipcode>02138</zipcode>
+        <telephone>978123454</telephone>
+        <email>spencer.marks@gmail.com</email>
+    </record>
+    <record>
+        <last_name>Marks</last_name>
+        <first_name>Dana</first_name>
+        <street_address>12 Pond Ave</street_address>
+        <additional_address></additional_address>
+        <city_or_town>Mountainview</city_or_town>
+        <state>MA</state>
+        <zipcode>02139</zipcode>
+        <telephone>988123454</telephone>
+        <email>danas@gmail.com</email>
+    </record>
+    <record>
+        <last_name>Patel</last_name>
+        <first_name>Prankaj</first_name>
+        <street_address>12 Albany Drive</street_address>
+        <additional_address></additional_address>
+        <city_or_town>San Jose</city_or_town>
+        <state>CA</state>
+        <zipcode>95129</zipcode>
+        <telephone>123456789</telephone>
+        <email>patelp45@netscape.net</email>
+    </record>
+</Addresses>

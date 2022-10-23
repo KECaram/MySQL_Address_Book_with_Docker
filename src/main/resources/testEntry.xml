@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+
+<Addresses>
+    <record>
+        <last_name>Scott</last_name>
+        <first_name>Michael</first_name>
+        <street_address>1 First St.</street_address>
+        <additional_address>Apt 115</additional_address>
+        <city_or_town>New York</city_or_town>
+        <state>NY</state>
+        <zipcode>10001</zipcode>
+        <telephone>1234567891</telephone>
+        <email>mscott@dundermifflen.com</email>
+    </record>
+</Addresses>

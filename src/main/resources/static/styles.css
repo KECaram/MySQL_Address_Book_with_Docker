@@ -1,0 +1,44 @@
+html * {
+  box-sizing: border-box;
+}
+
+body {
+  font-family: sans-serif;
+}
+
+label {
+  display: block;
+  margin-bottom: .25rem;
+}
+
+.form-field-wrapper {
+  display: flex;
+  width: 40rem;
+  margin: 0;
+  padding: 0;
+}
+
+.form-field {
+  width: 18rem;
+  padding: .5rem 0;
+}
+
+.form-field-sm {
+  width: 9rem;
+  padding: .5rem 0;
+}
+
+.form-field-wrapper .form-field {
+  margin-right: 1rem; 
+}
+
+input[type="text"] {
+  width: 100%;
+  padding: .5rem;
+}
+
+input[type="submit"] {
+  font-size: 1rem;
+  margin-top: 1rem;
+  padding: .5rem 1rem;
+}
