@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.*;
@@ -86,17 +87,66 @@ public class FileUploaderController {
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/form")
-    public ResponseEntity<String> createFromForm(@RequestBody String text) throws ProcessingException {
+    public String createFromForm(@RequestBody String text) throws ProcessingException {
+        AddressBookEntry entry;
         try {
             // a much better way
             ObjectMapper mapper = new ObjectMapper();
-            AddressBookEntry entry  = mapper.readValue(text, AddressBookEntry.class);
+            entry = mapper.readValue(text, AddressBookEntry.class);
             addressRepository.save(entry);
-
+            return entry.toString();
         } catch (Exception e) {
             throw new ProcessingException("Failed to process file.", e);
         }
-        return new ResponseEntity<>("Upload success!", HttpStatus.OK);
+
     }
+
+    @RequestMapping(method = RequestMethod.GET, value = "/search")
+    public String search(){
+        return "search.html";
+    }
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/search")
+    public ResponseEntity<List<AddressBookEntry>> handleSearch(@RequestBody MultiValueMap<String, String> formData){
+
+        String term = formData.get("search-term").get(0);
+        String field = formData.get("search-field").get(0);
+        List<AddressBookEntry> response = null;
+        switch (field) {
+            case "first_name":
+                response = addressRepository.findAddressBookEntriesByFirst_name(term);
+                break;
+            case "last_name":
+                response = addressRepository.findAddressBookEntriesByLast_name(term);
+                ;
+                break;
+            case "street_address":
+                response = addressRepository.findAddressBookEntriesByStreet_address(term);
+                break;
+            case "additional_address":
+                response = response = addressRepository.findAddressBookEntriesByAdditional_address(term);
+                break;
+            case "city_or_town":
+                response = addressRepository.findAddressBookEntriesByCity_or_town(term);
+                break;
+            case "state":
+                response = addressRepository.findAddressBookEntriesByState(term);
+                break;
+            case "zipcode":
+                response = addressRepository.findAddressBookEntriesByZipcode(term);
+                break;
+            case "email":
+                response = addressRepository.findAddressBookEntriesByEmail(term);
+                break;
+            case "telephone":
+                response = addressRepository.findAddressBookEntriesByTelephone(term);
+                break;
+            case "all":
+                response = addressRepository.findAddressBookEntriesByAny(term);
+        }
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+
 
 }

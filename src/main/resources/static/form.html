@@ -11,8 +11,8 @@
   </head>
 
   <body>
-    
-    <form>
+
+  <form>
       <div class="form-field-wrapper">
         <div class="form-field">
           <label>First Name:</label>
@@ -65,30 +65,30 @@
         // prevent native form submission
         e.preventDefault();
 
-        // get the form data 
+        // get the form data
         const data = new FormData(form);
 
         // convert form data to JSON object
         const json = Object.fromEntries(data.entries());
         console.log('json object is ', json);
 
-        // send json to api
+        //send json to api
         fetch('http://localhost:8080/form', {
           method: 'POST',
           body: JSON.stringify(json),
           headers: {
             'Content-type': 'application/json; charset=UTF-8'
           }
-        }).then(function (response) {
-          return response.text()
+        }).then(response => {
+
         }).catch(function (error) {
           // do something with the error
-        });
-        
+         });
+
       }
 
       const form = document.querySelector('form');
-      form.addEventListener('submit', handleSubmit);
+      const data = form.addEventListener('submit', handleSubmit);
 
     </script>
 
