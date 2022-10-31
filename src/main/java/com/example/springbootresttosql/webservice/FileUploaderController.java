@@ -44,11 +44,21 @@ public class FileUploaderController {
     }
 
     /**
+     * Method that performs a GET request to the endpoint localhost:8080/search
+     * @return search.html which is an HTML form that prompts for a search term
+     * and then allows the choice of a field to search for said term.
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/search")
+    public String search(){
+        return "search.html";
+    }
+
+    /**
      * Method called after a POST request to the endpoint localhost:8080/uploader.
      * Method pulls the posted file from the response body, and determines which data service to call.
      * The data service parses the file, and returns a list of entries from the file.
      * @param file a representation of the AddressBookEntry class either in JSON, CSV, or XML format.
-     * @return list of entries from processed and an OK response request is
+     * @return list of entries from processed and an OK response request
      * @throws ProcessingException if there is an error processing the file
      */
     @ResponseBody
@@ -82,7 +92,7 @@ public class FileUploaderController {
      * Method pulls the filled out form values as a JSON String from the response body.
      * The method then maps that string to the AddressBookEntry class and persists it through to the database.
      * @param text a representation of the AddressBookEntry class as a JSON formatted String
-     * @return AddressBookEntry containing the passed data and an OK response request is
+     * @return AddressBookEntry containing the passed data and an OK response request
      * @throws ProcessingException if there is an error processing the passed JSON String
      */
     @ResponseBody
@@ -101,10 +111,14 @@ public class FileUploaderController {
 
     }
 
-    @RequestMapping(method = RequestMethod.GET, value = "/search")
-    public String search(){
-        return "search.html";
-    }
+    /**
+     * Method called after a POST request to the endpoint localhost:8080/search.
+     * Method pulls the form values as a JSON String from the response body of search as a Map.
+     * The method then extracts each feld and passes them to the corresponding search methods.
+     * @param formData a JSON formatted string containing a search term and the field to search
+     * @return ResponseEntity containing the data returned by the search method
+     * and an OK response request.
+     */
 
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/search")
