@@ -38,7 +38,7 @@ public class FileUploaderController {
      * Method that performs a GET request to the endpoint localhost:8080/form
      * @return form.html which is an HTML form that accepts all the fields in the AddressBookEntry class
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/form")
+    @RequestMapping(method = RequestMethod.GET, value = "/")
     public String form(){
         return "form.html";
     }
@@ -96,7 +96,7 @@ public class FileUploaderController {
      * @throws ProcessingException if there is an error processing the passed JSON String
      */
     @ResponseBody
-    @RequestMapping(method = RequestMethod.POST, value = "/form")
+    @RequestMapping(method = RequestMethod.POST, value = "/")
     public String createFromForm(@RequestBody String text) throws ProcessingException {
         AddressBookEntry entry;
         try {
