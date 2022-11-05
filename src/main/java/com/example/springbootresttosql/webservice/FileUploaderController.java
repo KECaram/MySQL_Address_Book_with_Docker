@@ -4,7 +4,6 @@ import com.example.springbootresttosql.dataservice.CSVBackedAddressBookDataServi
 import com.example.springbootresttosql.dataservice.JSONBackedAddressBookDataService;
 import com.example.springbootresttosql.dataservice.XMLBackedAddressBookDataService;
 import com.example.springbootresttosql.model.AddressBookEntry;
-import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
@@ -91,24 +90,19 @@ public class FileUploaderController {
      * Method called after a POST request to the endpoint localhost:8080/form.
      * Method pulls the filled out form values as a JSON String from the response body.
      * The method then maps that string to the AddressBookEntry class and persists it through to the database.
-     * @param text a representation of the AddressBookEntry class as a JSON formatted String
+     * @param entry a representation of the AddressBookEntry class as a JSON formatted String
      * @return AddressBookEntry containing the passed data and an OK response request
      * @throws ProcessingException if there is an error processing the passed JSON String
      */
     @ResponseBody
     @RequestMapping(method = RequestMethod.POST, value = "/")
-    public String createFromForm(@RequestBody String text) throws ProcessingException {
-        AddressBookEntry entry;
+    public ResponseEntity<AddressBookEntry> createFromForm(@ModelAttribute AddressBookEntry entry) throws ProcessingException {
         try {
-            // a much better way
-            ObjectMapper mapper = new ObjectMapper();
-            entry = mapper.readValue(text, AddressBookEntry.class);
             addressRepository.save(entry);
-            return entry.toString();
         } catch (Exception e) {
-            throw new ProcessingException("Failed to process file.", e);
+            throw new ProcessingException("Failed to process form.", e);
         }
-
+        return new ResponseEntity<>(entry, HttpStatus.OK);
     }
 
     /**
