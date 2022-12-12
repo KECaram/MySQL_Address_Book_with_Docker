@@ -1,4 +1,4 @@
-# advanced_java_assignment5
+#MySQL AddressBook
 
 How to run:
 Set up your local MySQL environment:
