@@ -8,6 +8,7 @@ import com.fasterxml.jackson.databind.ObjectMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.*;
 import org.springframework.stereotype.Controller;
+import org.springframework.util.MultiValueMap;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.multipart.MultipartFile;
 import java.util.*;
@@ -37,9 +38,19 @@ public class FileUploaderController {
      * Method that performs a GET request to the endpoint localhost:8080/form
      * @return form.html which is an HTML form that accepts all the fields in the AddressBookEntry class
      */
-    @RequestMapping(method = RequestMethod.GET, value = "/form")
+    @RequestMapping(method = RequestMethod.GET, value = "/")
     public String form(){
         return "form.html";
+    }
+
+    /**
+     * Method that performs a GET request to the endpoint localhost:8080/search
+     * @return search.html which is an HTML form that prompts for a search term
+     * and then allows the choice of a field to search for said term.
+     */
+    @RequestMapping(method = RequestMethod.GET, value = "/search")
+    public String search(){
+        return "search.html";
     }
 
     /**
@@ -47,7 +58,7 @@ public class FileUploaderController {
      * Method pulls the posted file from the response body, and determines which data service to call.
      * The data service parses the file, and returns a list of entries from the file.
      * @param file a representation of the AddressBookEntry class either in JSON, CSV, or XML format.
-     * @return list of entries from processed and an OK response request is
+     * @return list of entries from processed and an OK response request
      * @throws ProcessingException if there is an error processing the file
      */
     @ResponseBody
@@ -77,26 +88,73 @@ public class FileUploaderController {
     }
 
     /**
-     * Method called after a POST request to the endpoint localhost:8080/form.
+     * Method called after a POST request to the endpoint localhost:8080/.
      * Method pulls the filled out form values as a JSON String from the response body.
      * The method then maps that string to the AddressBookEntry class and persists it through to the database.
-     * @param text a representation of the AddressBookEntry class as a JSON formatted String
-     * @return AddressBookEntry containing the passed data and an OK response request is
+     * @param entry a representation of the AddressBookEntry class using the ModelAttribute annotation
+     * @return AddressBookEntry containing the passed data and an OK response request
      * @throws ProcessingException if there is an error processing the passed JSON String
      */
-    @ResponseBody
-    @RequestMapping(method = RequestMethod.POST, value = "/form")
-    public ResponseEntity<String> createFromForm(@RequestBody String text) throws ProcessingException {
+    @RequestMapping(method = RequestMethod.POST, value = "/")
+    public ResponseEntity<AddressBookEntry> createFromForm(@ModelAttribute AddressBookEntry entry) throws ProcessingException {
         try {
-            // a much better way
-            ObjectMapper mapper = new ObjectMapper();
-            AddressBookEntry entry  = mapper.readValue(text, AddressBookEntry.class);
             addressRepository.save(entry);
-
         } catch (Exception e) {
-            throw new ProcessingException("Failed to process file.", e);
+            throw new ProcessingException("Failed to process form.", e);
         }
-        return new ResponseEntity<>("Upload success!", HttpStatus.OK);
+        return new ResponseEntity<>(entry, HttpStatus.OK);
     }
+
+    /**
+     * Method called after a POST request to the endpoint localhost:8080/search.
+     * Method pulls the form values as a JSON String from the response body of search as a Map.
+     * The method then extracts each feld and passes them to the corresponding search methods.
+     * @param formData a JSON formatted string containing a search term and the field to search
+     * @return ResponseEntity containing the data returned by the search method
+     * and an OK response request.
+     */
+
+    @ResponseBody
+    @RequestMapping(method = RequestMethod.POST, value = "/search")
+    public ResponseEntity<List<AddressBookEntry>> handleSearch(@RequestBody MultiValueMap<String, String> formData){
+
+        String term = formData.get("search-term").get(0);
+        String field = formData.get("search-field").get(0);
+        List<AddressBookEntry> response = null;
+        switch (field) {
+            case "first_name":
+                response = addressRepository.findAddressBookEntriesByFirst_name(term);
+                break;
+            case "last_name":
+                response = addressRepository.findAddressBookEntriesByLast_name(term);
+                ;
+                break;
+            case "street_address":
+                response = addressRepository.findAddressBookEntriesByStreet_address(term);
+                break;
+            case "additional_address":
+                response = response = addressRepository.findAddressBookEntriesByAdditional_address(term);
+                break;
+            case "city_or_town":
+                response = addressRepository.findAddressBookEntriesByCity_or_town(term);
+                break;
+            case "state":
+                response = addressRepository.findAddressBookEntriesByState(term);
+                break;
+            case "zipcode":
+                response = addressRepository.findAddressBookEntriesByZipcode(term);
+                break;
+            case "email":
+                response = addressRepository.findAddressBookEntriesByEmail(term);
+                break;
+            case "telephone":
+                response = addressRepository.findAddressBookEntriesByTelephone(term);
+                break;
+            case "all":
+                response = addressRepository.findAddressBookEntriesByAny(term);
+        }
+            return new ResponseEntity<>(response, HttpStatus.OK);
+        }
+
 
 }

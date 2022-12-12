@@ -59,7 +59,7 @@ public class ControllerTest {
      */
     @Test
     public void launchGETFormTest() throws Exception {
-        this.mvc.perform(get("/form")).andDo(print()).andExpect(status().isOk());
+        this.mvc.perform(get("/")).andDo(print()).andExpect(status().isOk());
     }
 
     /**
