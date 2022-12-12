@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html>
+    <body>
+        <h1>Search</h1>
+            <form action = "http://localhost:8080/search" method = "POST">
+                <label for="search-term">Enter term to search for:</label>
+                <input type="text" id="search-term" name="search-term"><br><br>
+                <label for="search-field">Choose field to search:</label>
+                <select name="search-field" id="search-field">
+                    <option value="first_name">First Name</option>
+                    <option value="last_name">Last Name</option>
+                    <option value="street_address">Street Address</option>
+                    <option value="additional_address">Additional Address</option>
+                    <option value="city_or_town">City or Town</option>
+                    <option value="state">State</option>
+                    <option value="zipcode">Zipcode</option>
+                    <option value="email">Email</option>
+                    <option value="telephone">Telephone</option>
+                    <option value="all">All</option>
+                </select>
+                <input type="submit" value="Submit">
+            </form>
+    </body>
+</html>
